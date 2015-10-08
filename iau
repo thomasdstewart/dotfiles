@@ -1,0 +1,19 @@
+#!/bin/bash -eu
+cd ~
+if [ ! -d dotfiles ]; then
+        #proxy
+        git clone https://github.com/thomasdstewart/dotfiles.git
+else
+        cd $HOME/dotfiles
+        git pull
+fi
+find ~/dotfiles/ ! -path '*/dotfiles/.git*' -name '.*' -type f \
+                | while read f; do
+        hf="$HOME/$(basename $f)"
+        if [ -f "$hf" -a ! -L "$hf" ]; then
+                mv -v "$hf" "$hf.old"
+        fi
+        if [ ! -L "$hf" ]; then
+                ln -svt ~ $f
+        fi
+done
