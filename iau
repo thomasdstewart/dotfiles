@@ -1,4 +1,5 @@
 #!/bin/bash -eu
+#curl https://raw.githubusercontent.com/thomasdstewart/dotfiles/master/iau | bash
 cd ~
 if [ ! -d dotfiles ]; then
         #proxy
