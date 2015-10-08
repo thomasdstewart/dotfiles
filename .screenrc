@@ -1,0 +1,6 @@
+termcapinfo xterm* ti@:te@
+startup_message off
+altscreen on
+hardstatus alwayslastline
+hardstatus string "%{bw}%S: %-Lw%{BW}%n*%f %t%{-}%+Lw"
+defscrollback 20000

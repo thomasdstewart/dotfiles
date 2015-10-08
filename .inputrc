@@ -1,0 +1,4 @@
+$include /etc/inputrc
+
+set bell-style none
+set blink-matching-paren on
