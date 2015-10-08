@@ -280,7 +280,7 @@ export DEBEMAIL="$EMAIL"
 #        fi
 #fi
 
-if [ -n "$DISPLAY"]; then
+if [ -n "$DISPLAY" ]; then
         export BROWSER=firefox
 else
         export BROWSER=www-browser
