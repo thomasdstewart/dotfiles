@@ -110,7 +110,7 @@ else
 fi
 nojobs="${darkgreen}\${jl}${no_colour}"
 laststatus="${red}\`if [ \$? = "0" ]; then echo ''; else echo \"(\$?)\"; true; fi\`${no_colour}"
-history="${darkred}\!${no_colour}"
+historynum="${darkred}\!${no_colour}"
 prompt="${darkgreen}\\$"
 
 dateandtime="${darkbrown}\$(date +'%H:%M %a %d/%m/%Y')${no_colour}"
@@ -152,7 +152,7 @@ export PROMPT_COMMAND="jl=; test \$(jobs | wc -l) -gt 0 && jl=\"(\$(jobs|wc -l))
 if [ "$color_prompt" = yes ]; then
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     #PS1="${debian_chroot:+($debian_chroot)}${green}\u@\h${no_color}:${blue}\w${no_color}\$ "
-    PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir} ${nojobs}${laststatus}${history}${prompt}${no_colour} "
+    PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir} ${nojobs}${laststatus}${historynum}${prompt}${no_colour} "
 else
     #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
     PS1="${debian_chroot:+($debian_chroot)}\u@\h \w \${jl}\`if [ \$? = "0" ]; then echo ''; else echo \"(\$?)\"; true; fi\`\!\$ "
@@ -198,7 +198,7 @@ alias '..'='cd ..'
 alias '...'='cd ../..'
 alias '....'='cd ../../..'
 alias '.....'='cd ../../../..'
-alias h=history
+alias h='history | less'
 alias hg='h | grep'
 alias c=clear
 alias j="jobs -l"
