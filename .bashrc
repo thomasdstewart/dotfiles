@@ -412,9 +412,10 @@ tomstatus (){
                         free="free -hm"
                 fi
                 $free | sed 's/total/type total/' | sed 's/://' | sed -e "s/\b\(.\)/\u\1/g"
-                df -hlTP -x tmpfs -x devtmpfs | head -1 | sed 's/Mounted    on/Mounted/'
+                df -hlTP -x tmpfs -x devtmpfs | head -1 | sed 's/Mounted.*on/Mounted/'
                 df -hlTP -x tmpfs -x devtmpfs | awk 'NR>1' | sort
         ) | column -t
+        ip -o l | awk '{$1=""; print $0}' | grep -v "^ lo" | sed 's/[ \t][ \t]*/ /g' | sed 's/^ //'
         ip -4 -o addr | awk '{$1=""; print $0}' | grep -v "^ lo" | sed 's/[ \t][ \t]*/ /g' | sed 's/scope.*//' | sed 's/^ //'
         ip -4 -o route | sed 's/[ \t][ \t]*/ /g' | sed 's/proto kernel scope link //'
         ip -6 -o addr | awk '{$1=""; print $0}' | grep -v "^ lo" | sed 's/[ \t][ \t]*/ /g' | sed 's/scope.*//' | sed 's/^ //' | grep -v "inet6 fe80"
