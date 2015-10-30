@@ -109,6 +109,7 @@ else
         gitstatus=''
 fi
 nojobs="${darkgreen}\${jl}${no_colour}"
+noscreens="${darkyellow}\${sl}${no_colour}"
 laststatus="${red}\`if [ \$? = "0" ]; then echo ''; else echo \"(\$?)\"; true; fi\`${no_colour}"
 historynum="${darkred}\!${no_colour}"
 prompt="${darkgreen}\\$"
@@ -148,11 +149,12 @@ _csi_gold=$(tput setaf 3)
 #PS1="\n\$(smile) ${_csi_cyan}\\A $(user_colour)\\u@\\h ${_csi_gold}\\w$_csi_default \$(__git_ps1 '(%s)')\n\\$ "
 
 export PROMPT_COMMAND="jl=; test \$(jobs | wc -l) -gt 0 && jl=\"(\$(jobs|wc -l))\";$PROMPT_COMMAND"
+export PROMPT_COMMAND="sl=; test \$(ps x | grep SCREEN | grep -v grep | grep -v davmail | wc -l) -gt 0 && sl=\"(\$(ps x | grep SCREEN | grep -v grep | wc -l))\";$PROMPT_COMMAND"
 
 if [ "$color_prompt" = yes ]; then
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     #PS1="${debian_chroot:+($debian_chroot)}${green}\u@\h${no_color}:${blue}\w${no_color}\$ "
-    PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir} ${nojobs}${laststatus}${historynum}${prompt}${no_colour} "
+    PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir} ${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
 else
     #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
     PS1="${debian_chroot:+($debian_chroot)}\u@\h \w \${jl}\`if [ \$? = "0" ]; then echo ''; else echo \"(\$?)\"; true; fi\`\!\$ "
