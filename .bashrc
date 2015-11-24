@@ -425,29 +425,15 @@ tomstatus (){
 }
 tomstatus
 
-#https://github.com/yrro/dotfiles
 updaterc () {
-        cd ~
-        #add muttrc
-        #add .quiltrc-dpkg
-        url="https://beryl.stewarts.org.uk/~thomas/noauth"
-        key="hkaHdsSV3SxX9SAsiJAs0"
-        for f in .bashrc .vimrc .screenrc .psqlrc; do
-                wget -q -N -P ~ --no-check-certificate $url/.$key$f
-                c="$(md5sum $f .$key$f | awk '{print $1}' | sort | uniq | wc -l)"
-                if [ "$c" -eq 1 ]; then
-                        rm -f ~/.$key$f
-                elif [ "$c" -eq 2 ]; then
-                        if [ .$key$f -nt $f ]; then
-                                cp -v ~/$f ~/$f.$(date +%s)
-                                mv -uv .$key$f $f
-                        else
-                                echo "conflict"
-                                diff -u .$key$f $f
-                        fi
-                fi
-        done
-        source ~/.bashrc
+        n=$( last | grep ^thomas | wc -l )
+        tenth=$(( $n % 10 ))
+        if [ $tenth -eq 0 ]; then
+                echo "updating dotfiles"
+                test -f ~/dotfiles/iau && ~/dotfiles/iau
+                test -f ~/.dotfiles/iau && ~/.dotfiles/iau
+                echo "done"
+        fi
 }
-
+updaterc
 
