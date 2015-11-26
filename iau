@@ -1,20 +1,22 @@
 #!/bin/bash -eu
 #curl https://raw.githubusercontent.com/thomasdstewart/dotfiles/master/iau | bash
 cd ~
-if [ ! -d dotfiles ]; then
-        #proxy
-        git clone https://github.com/thomasdstewart/dotfiles.git
-else
-        cd $HOME/dotfiles
-        git pull
+if [ ! -d dotfiles -a ! -d .dotfiles ]; then
+        #set proxy
+        git clone https://github.com/thomasdstewart/dotfiles.git .dotfiles
 fi
-find ~/dotfiles/ ! -path '*/dotfiles/.git*' -name '.*' -type f \
+if [ -d dotfiles -a ! -d .dotfiles ]; then
+        mv dotfiles .dotfiles
+fi
+git -C ~/.dotfiles pull
+
+find ~/.dotfiles/ ! -path '*/.dotfiles/.git*' -name '.*' -type f \
                 | while read f; do
         hf="$HOME/$(basename $f)"
         if [ -f "$hf" -a ! -L "$hf" ]; then
                 mv -v "$hf" "$hf.old"
         fi
-        if [ ! -L "$hf" ]; then
-                ln -svt ~ $f
+        if [ ! -f "$hf" -o ! -L "$hf" ]; then
+                ln -svft ~ $f
         fi
 done
