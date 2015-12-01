@@ -428,7 +428,7 @@ tomstatus
 updaterc () {
         n=$( last | grep ^thomas | wc -l )
         tenth=$(( $n % 10 ))
-        if [ $tenth -eq 0 ]; then
+        if [ $n -ne 0 -a $tenth -eq 0 ]; then
                 echo "updating dotfiles"
                 test -f ~/dotfiles/iau && ~/dotfiles/iau
                 test -f ~/.dotfiles/iau && ~/.dotfiles/iau
