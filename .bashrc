@@ -426,9 +426,15 @@ tomstatus (){
 tomstatus
 
 updaterc () {
-        n=$( last | grep ^thomas | wc -l )
+        n=$(last | grep ^thomas | wc -l)
         tenth=$(( $n % 10 ))
+        new=$(find ~/.dotfiles/.git/index -mtime +7 | wc -l)
         if [ $n -ne 0 -a $tenth -eq 0 ]; then
+                echo "updating dotfiles"
+                test -f ~/dotfiles/iau && ~/dotfiles/iau
+                test -f ~/.dotfiles/iau && ~/.dotfiles/iau
+                echo "done"
+        elif [ $new -eq 1 ]; then
                 echo "updating dotfiles"
                 test -f ~/dotfiles/iau && ~/dotfiles/iau
                 test -f ~/.dotfiles/iau && ~/.dotfiles/iau
