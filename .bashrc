@@ -426,19 +426,26 @@ tomstatus (){
 tomstatus
 
 updaterc () {
-        n=$(last | grep ^thomas | wc -l)
-        tenth=$(( $n % 10 ))
-        new=$(find ~/.dotfiles/.git/index -mtime +7 | wc -l)
-        if [ $n -ne 0 -a $tenth -eq 0 ]; then
+        if [ -d ~/dotfiles/ ]; then
+                ~/dotfiles/iau
+                ~/.dotfiles/iau
+                return
+        fi
+
+        #logincount=$(last | grep "^$USER" | wc -l)
+        #everytenth=$(( $logincount % 10 ))
+        #if [ $logincount -ne 0 -a $everytenth -eq 0 ]; then
+        #        updaterc
+        #        return
+        #fi
+
+        indexolderthanaweek=$(find ~/.dotfiles/.git/index -mtime +7 | wc -l)
+        if [ $indexolderthanaweek -eq 1 ]; then
                 echo "updating dotfiles"
-                test -f ~/dotfiles/iau && ~/dotfiles/iau
-                test -f ~/.dotfiles/iau && ~/.dotfiles/iau
+                /.dotfiles/iau
+                touch ~/.dotfiles/.git/index 
                 echo "done"
-        elif [ $new -eq 1 ]; then
-                echo "updating dotfiles"
-                test -f ~/dotfiles/iau && ~/dotfiles/iau
-                test -f ~/.dotfiles/iau && ~/.dotfiles/iau
-                echo "done"
+                return
         fi
 }
 updaterc
