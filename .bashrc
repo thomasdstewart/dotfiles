@@ -218,12 +218,12 @@ alias dstat='dstat --bw'
 alias ping='ping -n'
 alias rsync='rsync -h'
 
-alias burniso="wodim -v dev=/dev/cdrw "
-alias burndvd="growisofs -Z /dev/dvdrw="
-alias blankcd="wodim -v dev=/dev/cdrw blank=fast"
+alias burniso="wodim -v dev=/dev/sr0 "
+alias burndvd="growisofs -Z /dev/sr0="
+alias blankcd="wodim -v dev=/dev/sr0 blank=fast"
 alias mkiso='genisoimage -R -r -l -J '
 burnfile() { mkiso "$*" | burniso - ; }
-alias burnfiledvd="growisofs -Z /dev/dvdrw -R -r -l -J "$*""
+alias burnfiledvd="growisofs -Z /dev/sr0 -R -r -l -J "$*""
 
 alias moshberyl="mosh --ssh=\"nc -z -w1 beryl.stewarts.org.uk 222 2> /dev/null; ssh \" thomas@beryl.stewarts.org.uk"
 
