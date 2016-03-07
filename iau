@@ -8,7 +8,9 @@ fi
 if [ -d dotfiles -a ! -d .dotfiles ]; then
         mv dotfiles .dotfiles
 fi
-git -C ~/.dotfiles pull
+cd ~/.dotfiles
+git pull
+cd -
 
 find ~/.dotfiles/ ! -path '*/.dotfiles/.git*' -name '.*' -type f \
                 | while read f; do
