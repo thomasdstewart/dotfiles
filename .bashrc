@@ -152,13 +152,12 @@ function __ps1 {
                 GIT_PS1_SHOWSTASHSTATE=1
                 GIT_PS1_SHOWUNTRACKEDFILES=1
                 GIT_PS1_SHOWUPSTREAM=verbose
-                #gitstatus='$(__git_ps1 " (%s)")'
-                gitstatus=''
+                gitstatus=' $(__git_ps1 "(%s)")'
         else
                 gitstatus=''
         fi
 
-        export PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir} ${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
+        export PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir}${gitstatus} ${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
 
         case "$TERM" in
         xterm*|rxvt*)
