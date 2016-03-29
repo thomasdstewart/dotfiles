@@ -46,6 +46,8 @@ shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+export PAGER=less
+export LESS="-F -i -M -R -x4 -X"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -256,8 +258,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PAGER=less
-export LESS="-F -i -M -R -S -x4 -X"
 export EDITOR=vim
 export NAME="Thomas Stewart"
 export EMAIL="thomas@stewarts.org.uk"
