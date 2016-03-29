@@ -122,6 +122,17 @@ function __ps1 {
         hostname="${darkgreen}\h${no_colour}"
         workingdir="${darkcyan}\w${no_colour}"
 
+        if [ -f /etc/bash_completion.d/git-prompt ]; then
+                . /etc/bash_completion.d/git-prompt
+                GIT_PS1_SHOWDIRTYSTATE=1
+                GIT_PS1_SHOWSTASHSTATE=1
+                GIT_PS1_SHOWUNTRACKEDFILES=1
+                GIT_PS1_SHOWUPSTREAM=verbose
+                gitstatus=' $(__git_ps1 "(%s)")'
+        else
+                gitstatus=''
+        fi
+
         nojobs=$(jobs | wc -l)
         if [ $nojobs -gt 0 ]; then
                 nojobs=${darkgreen}\($nojobs\)${no_colour}
@@ -145,17 +156,6 @@ function __ps1 {
 
         historynum="${darkred}\!${no_colour}"
         prompt="${darkgreen}\\$"
-
-        if [ -f /etc/bash_completion.d/git-prompt ]; then
-                . /etc/bash_completion.d/git-prompt
-                GIT_PS1_SHOWDIRTYSTATE=1
-                GIT_PS1_SHOWSTASHSTATE=1
-                GIT_PS1_SHOWUNTRACKEDFILES=1
-                GIT_PS1_SHOWUPSTREAM=verbose
-                gitstatus=' $(__git_ps1 "(%s)")'
-        else
-                gitstatus=''
-        fi
 
         export PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir}${gitstatus} ${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
 
