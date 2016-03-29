@@ -159,6 +159,14 @@ function __ps1 {
         fi
 
         export PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir} ${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
+
+        case "$TERM" in
+        xterm*|rxvt*)
+            export PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+            ;;
+        *)
+            ;;
+        esac
 }
 PROMPT_COMMAND="__ps1;$PROMPT_COMMAND"
 
