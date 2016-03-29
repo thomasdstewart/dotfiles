@@ -120,6 +120,19 @@ function __ps1 {
         username="${darkyellow}\u${no_colour}"
         at="${black}@${no_colour}"
         hostname="${darkgreen}\h${no_colour}"
+
+        if [ -x /bin/systemctl ]; then 
+                systemdstatus=$(systemctl is-system-running)
+                if [ $systemdstatus != running ]; then
+                        systemdstatus=${red}\(${systemdstatus}\)${no_colour}
+
+                else
+                        systemdstatus=
+                fi
+        else
+                systemdstatus=
+        fi
+
         workingdir="${darkcyan}\w${no_colour}"
 
         if [ -f /etc/bash_completion.d/git-prompt ]; then
@@ -131,6 +144,12 @@ function __ps1 {
                 gitstatus=' $(__git_ps1 "(%s)")'
         else
                 gitstatus=''
+        fi
+
+        if [ "$OS_AUTH_URL" != "" ]; then
+                openstack="($OS_USERNAME/$OS_TENANT_NAME@$OS_CLOUDNAME)"
+        else
+                openstack=""
         fi
 
         nojobs=$(jobs | wc -l)
@@ -157,7 +176,7 @@ function __ps1 {
         historynum="${darkred}\!${no_colour}"
         prompt="${darkgreen}\\$"
 
-        export PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir}${gitstatus} ${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
+        export PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname}$systemdstatus ${workingdir}${gitstatus}${openstack} ${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
 
         case "$TERM" in
         xterm*|rxvt*)
