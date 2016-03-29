@@ -394,7 +394,7 @@ tsdebsum () {
         cd -
 }
 
-tomstatus (){
+tomstatus () {
         load="$(cat /proc/loadavg)"
         procs="$(ps auxww | wc -l)"
         users="$(who | wc -l)"
