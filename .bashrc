@@ -75,91 +75,97 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-no_colour="\[\e[0m\]"
+function __ps1 {
+        laststatus=$?
 
-black="\[\e[0;30m\]"
-darkred="\[\e[0;31m\]"
-darkgreen="\[\e[0;32m\]"
-darkyellow="\[\e[0;33m\]"
-darkblue="\[\e[0;34m\]"
-darkpurple="\[\e[0;35m\]"
-darkcyan="\[\e[0;36m\]"
-gray="\[\e[0;37m\]"
+        #no_color=$(tput sgr 0)
+        #black=$(tput setaf 0)
+        #darkred=$(tput setaf 1)
+        #darkgreen=$(tput setaf 2)
+        #darkyellow=$(tput setaf 3)
+        #darkblue=$(tput setaf 4)
+        #darkpurple=$(tput setaf 5)
+        #darkcyan=$(tput setaf 6)
+        #gray=$(tput setaf 7)
+        #darkgray=$(tput setaf 8)
+        #red=$(tput setaf 9)
+        #green=$(tput setaf 10)
+        #yellow=$(tput setaf 11)
+        #blue=$(tput setaf 12)
+        #purple=$(tput setaf 13)
+        #cyan=$(tput setaf 14)
+        #lightgray=$(tput setaf 15)
 
-darkgray="\[\e[1;30m\]"
-red="\[\e[1;31m\]"
-green="\[\e[1;32m\]"
-yellow="\[\e[1;33m\]"
-blue="\[\e[1;34m\]"
-purple="\[\e[1;35m\]"
-cyan="\[\e[1;36m\]"
-white="\[\e[1;37m\]"
+        #for n in $(seq 0 256); do echo -en "$(tput setaf $n)colour $n\t"; done
+        #colortest="${black}black${no_color} ${darkred}darkred${no_color} ${darkgreen}darkgreen${no_color} ${darkyellow}darkyellow${no_color} ${darkblue}darkblue${no_color} ${darkpurple}darkpurple${no_color} ${darkcyan}darkcyan${no_color} ${gray}gray${no_color} ${darkgray}darkgray${no_color} ${red}red${no_color} ${green}green${no_color} ${yellow}yellow${no_color} ${blue}blue${no_color} ${purple}purple${no_color} ${cyan}cyan${no_color} ${lightgray}lightgray${no_color}"; echo $colortest
 
-username="${darkyellow}\u${no_colour}"
-at="${black}@${no_colour}"
-hostname="${darkgreen}\h${no_colour}"
-workingdir="${darkcyan}\w${no_colour}"
-if [ -f /etc/bash_completion.d/git-prompt ]; then
-        . /etc/bash_completion.d/git-prompt
-        GIT_PS1_SHOWDIRTYSTATE=1
-        GIT_PS1_SHOWSTASHSTATE=1
-        GIT_PS1_SHOWUNTRACKEDFILES=1
-        GIT_PS1_SHOWUPSTREAM=verbose
-        #gitstatus='$(__git_ps1 " (%s)")'
-        gitstatus=''
-else
-        gitstatus=''
-fi
-nojobs="${darkgreen}\${jl}${no_colour}"
-noscreens="${darkyellow}\${sl}${no_colour}"
-laststatus="${red}\`if [ \$? = "0" ]; then echo ''; else echo \"(\$?)\"; true; fi\`${no_colour}"
-historynum="${darkred}\!${no_colour}"
-prompt="${darkgreen}\\$"
+        no_colour="\[\e[0m\]"
+        black="\[\e[0;30m\]"
+        darkred="\[\e[0;31m\]"
+        darkgreen="\[\e[0;32m\]"
+        darkyellow="\[\e[0;33m\]"
+        darkblue="\[\e[0;34m\]"
+        darkpurple="\[\e[0;35m\]"
+        darkcyan="\[\e[0;36m\]"
+        gray="\[\e[0;37m\]"
+        darkgray="\[\e[1;30m\]"
+        red="\[\e[1;31m\]"
+        green="\[\e[1;32m\]"
+        yellow="\[\e[1;33m\]"
+        blue="\[\e[1;34m\]"
+        purple="\[\e[1;35m\]"
+        cyan="\[\e[1;36m\]"
+        white="\[\e[1;37m\]"
 
-dateandtime="${darkbrown}\$(date +'%H:%M %a %d/%m/%Y')${no_colour}"
-smileface=" \|/ ____ \|/\n ~@-/ oO \-@~\n /_( \__/ )_\ \n    \__U_/\n"
+        username="${darkyellow}\u${no_colour}"
+        at="${black}@${no_colour}"
+        hostname="${darkgreen}\h${no_colour}"
+        workingdir="${darkcyan}\w${no_colour}"
 
-case $(locale charmap) in
-UTF-8)
-        _smile_happy='☺ '
-        _smile_frown='☹ '
-        ;;
-*)
-        _smile_happy=':)'
-        _smile_frown=':('
-        ;;
-esac
-function smile {
-        if [[ $? -eq 0 ]]; then
-                printf "${_csi_green}${_smile_happy}"
+        nojobs=$(jobs | wc -l)
+        if [ $nojobs -gt 0 ]; then
+                nojobs=${darkgreen}\($nojobs\)${no_colour}
         else
-                printf "${_csi_red}${_smile_frown}"
+                nojobs=""
         fi
-}
-function user_colour {
-        if test "$UID" = 0; then
-                printf "${_csi_red}"
-        else
-                printf "${_csi_green}"
-        fi
-}
-_csi_default=$(tput sgr 0)
-_csi_cyan=$(tput setaf 6)
-_csi_green=$(tput setaf 2)
-_csi_red=$(tput setaf 1)
-_csi_gold=$(tput setaf 3)
-#PS1="\n\$(smile) ${_csi_cyan}\\A $(user_colour)\\u@\\h ${_csi_gold}\\w$_csi_default \$(__git_ps1 '(%s)')\n\\$ "
 
-export PROMPT_COMMAND="jl=; test \$(jobs | wc -l) -gt 0 && jl=\"(\$(jobs|wc -l))\";$PROMPT_COMMAND"
-export PROMPT_COMMAND="sl=; test \$(ps x | grep SCREEN | grep -v grep | grep -v davmail | wc -l) -gt 0 && sl=\"(\$(ps x | grep SCREEN | grep -v grep | wc -l))\";$PROMPT_COMMAND"
+        noscreens=$(ps x | grep SCREEN | grep -v grep | grep -v davmail | wc -l)
+        if [ $noscreens -gt 0 ]; then
+                noscreens=$(ps x | grep SCREEN | grep -v grep | wc -l)
+                noscreens=${darkyellow}\(${noscreens}\)${no_colour}
+        else
+                noscreens=""
+        fi
+
+        if [ $laststatus -ne 0 ]; then
+                laststatus=${red}\($laststatus\)${no_colour}
+        else
+                laststatus=""
+        fi
+
+        historynum="${darkred}\!${no_colour}"
+        prompt="${darkgreen}\\$"
+
+        if [ -f /etc/bash_completion.d/git-prompt ]; then
+                . /etc/bash_completion.d/git-prompt
+                GIT_PS1_SHOWDIRTYSTATE=1
+                GIT_PS1_SHOWSTASHSTATE=1
+                GIT_PS1_SHOWUNTRACKEDFILES=1
+                GIT_PS1_SHOWUPSTREAM=verbose
+                #gitstatus='$(__git_ps1 " (%s)")'
+                gitstatus=''
+        else
+                gitstatus=''
+        fi
+
+        export PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir} ${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
+}
+PROMPT_COMMAND="__ps1;$PROMPT_COMMAND"
 
 if [ "$color_prompt" = yes ]; then
-    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    #PS1="${debian_chroot:+($debian_chroot)}${green}\u@\h${no_color}:${blue}\w${no_color}\$ "
-    PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname} ${workingdir} ${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-    PS1="${debian_chroot:+($debian_chroot)}\u@\h \w \${jl}\`if [ \$? = "0" ]; then echo ''; else echo \"(\$?)\"; true; fi\`\!\$ "
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
