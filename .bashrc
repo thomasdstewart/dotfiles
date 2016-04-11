@@ -117,7 +117,12 @@ function __ps1 {
         cyan="\[\e[1;36m\]"
         white="\[\e[1;37m\]"
 
-        username="${darkyellow}\u${no_colour}"
+        if [ "$UID" -eq 0 ]; then
+                username="${red}\u${no_colour}"
+        else
+                username="${darkyellow}\u${no_colour}"
+        fi
+
         at="${black}@${no_colour}"
         hostname="${darkgreen}\h${no_colour}"
 
