@@ -469,17 +469,10 @@ updaterc () {
                 return
         fi
 
-        #logincount=$(last | grep "^$USER" | wc -l)
-        #everytenth=$(( $logincount % 10 ))
-        #if [ $logincount -ne 0 -a $everytenth -eq 0 ]; then
-        #        updaterc
-        #        return
-        #fi
-
         indexolderthanaweek=$(find ~/.dotfiles/.git/index -mtime +7 | wc -l)
         if [ $indexolderthanaweek -eq 1 ]; then
                 echo "updating dotfiles"
-                ~/.dotfiles/iau
+                ~/.dotfiles/iau || echo failed && return
                 touch ~/.dotfiles/.git/index 
                 echo "done"
                 return
