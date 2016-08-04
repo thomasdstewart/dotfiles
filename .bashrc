@@ -472,7 +472,11 @@ updaterc () {
         indexolderthanaweek=$(find ~/.dotfiles/.git/index -mtime +7 | wc -l)
         if [ $indexolderthanaweek -eq 1 ]; then
                 echo "updating dotfiles"
-                ~/.dotfiles/iau || echo failed && return
+                ~/.dotfiles/iau
+                if [ $? -ne 0 ]; then
+                        echo failed
+                        exit
+                fi
                 touch ~/.dotfiles/.git/index 
                 echo "done"
                 return
