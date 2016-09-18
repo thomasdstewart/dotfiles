@@ -10,3 +10,4 @@
  * auu for yum/dnf
  * add "aptitude search ~o" to auu to show obsolete packages
  * https://github.com/Bash-it/bash-it
+ * openstack tail: tail -f /var/log/nova/*log | sed -r "s/$(date +%Y-%m-%d) //g; s/[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}/ID/g; s/[0-9a-z]{32}/ID/g"
