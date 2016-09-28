@@ -481,7 +481,7 @@ updaterc () {
                 ~/.dotfiles/iau
                 if [ $? -ne 0 ]; then
                         echo failed
-                        exit
+                        return
                 fi
                 touch ~/.dotfiles/.git/index 
                 echo "done"
