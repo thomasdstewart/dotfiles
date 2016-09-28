@@ -444,6 +444,12 @@ tomstatus () {
         echo "Load $load Procs $procs Users $users"
         echo "$mo So $so Co $co Si $si"
 
+        vm="$(grep -q ^flags.*hypervisor /proc/cpuinfo && echo vm || echo phy)"
+        sv="$(cat /sys/class/dmi/id/sys_vendor)"
+        pn="$(cat /sys/class/dmi/id/product_name)"
+        pv="$(cat /sys/class/dmi/id/product_version)"
+        echo "System ($vm): $sv $pn $pv"
+
         (
                 if [ "$(free -help 2>&1 | grep -- '-h' | wc -l)" -eq 0 ]; then
                         free="free -m"
