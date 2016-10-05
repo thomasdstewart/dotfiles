@@ -17,7 +17,7 @@ if has("gui_running")
 endif
 
 "type of encryption to use for file writing
-set cryptmethod=blowfish2
+"set cryptmethod=blowfish2
 
 "no behave Vi-compatible as much as possible
 set nocompatible
