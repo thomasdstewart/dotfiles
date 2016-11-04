@@ -152,7 +152,7 @@ function __ps1 {
         fi
 
         if [ "$OS_AUTH_URL" != "" ]; then
-                openstack="($OS_USERNAME/$OS_TENANT_NAMEOS_PROJECT_NAME@$(echo $OS_AUTH_URL | awk -F'/' '{print $3}'))"
+                openstack="($OS_USERNAME/$OS_TENANT_NAME$OS_PROJECT_NAME@$(echo $OS_AUTH_URL | awk -F'/' '{print $3}'))"
         else
                 openstack=""
         fi
