@@ -301,6 +301,7 @@ export NAME="Thomas Stewart"
 export EMAIL="thomas@stewarts.org.uk"
 export DEBFULLNAME="$NAME"
 export DEBEMAIL="$EMAIL"
+export TZ="Europe/London"
 
 #if [ -z $http_proxy ]; then
 #        RSYNC_PROXY="$http_proxy"
