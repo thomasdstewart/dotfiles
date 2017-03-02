@@ -301,6 +301,7 @@ export NAME="Thomas Stewart"
 export EMAIL="thomas@stewarts.org.uk"
 export DEBFULLNAME="$NAME"
 export DEBEMAIL="$EMAIL"
+export TZ="Europe/London"
 
 #if [ -z $http_proxy ]; then
 #        RSYNC_PROXY="$http_proxy"
@@ -328,8 +329,12 @@ fi
 
 command -v stty &>/dev/null && stty stop undef && stty start undef
 
+_unit=""
+if [ $(echo -en "3.3.10\n$(ps -V | rev | awk '{print $1}' | rev)" | sort -t. -n -k3 -k2 -k1 | head -1) == "3.3.10" ]; then
+        _unit="unit,"
+fi
 psa() {
-        ps axwwf --sort pid -o pid,ppid,nlwp,user,group,nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
+        ps axwwf --sort pid -o pid,ppid,nlwp,user,group,${_unit}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
                 | egrep --color=auto -i "^  PID|$1" | grep -v grep
 }
 
