@@ -258,7 +258,7 @@ alias dstat='dstat --bw'
 alias ping='ping -n'
 alias rsync='rsync -h'
 if [ $(ip help 2>&1 | grep -- -c | wc -l) -eq 1 ]; then
-        alias ip='ip -c '
+        alias ip='ip -c'
 fi
 
 alias burniso="wodim -v dev=/dev/sr0 "
