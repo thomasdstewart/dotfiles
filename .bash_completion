@@ -1,1 +1,2 @@
+# generate with: openstack complete > ~/.dotfiles/.bash_completion.openstack
 . ~/.bash_completion.openstack
