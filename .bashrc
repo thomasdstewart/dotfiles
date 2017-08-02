@@ -342,6 +342,16 @@ psa() {
 
 ws () { wireshark $@& }
 
+function lsblka {
+        lsblk
+        lsblk -f
+        lsblk -m
+        lsblk -S
+        lsblk -t
+        ldblk -S
+        lsblk -o NAME,SERIAL,KNAME,PARTUUID,STATE,WWN,RAND,PKNAME
+}
+
 #http://cmrg.fifthhorseman.net/wiki/BashFunctions
 # create temporary directory, and cd to it,
 # copying in all specified files
