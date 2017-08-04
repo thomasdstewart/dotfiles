@@ -450,6 +450,7 @@ tsdebsum () {
 }
 
 tomstatus () {
+        uname -a
         load="$(cat /proc/loadavg)"
         procs="$(ps auxww | wc -l)"
         users="$(who | wc -l)"
