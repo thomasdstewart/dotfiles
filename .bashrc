@@ -348,7 +348,7 @@ function lsblka {
         lsblk -m
         lsblk -S
         lsblk -t
-        ldblk -S
+        lsblk -S
         lsblk -o NAME,SERIAL,KNAME,PARTUUID,STATE,WWN,RAND,PKNAME
 }
 
