@@ -336,7 +336,7 @@ if [ $(echo -en "3.3.10\n$(ps -V | rev | awk '{print $1}' | rev)" | sort -t. -n 
         _unit="unit,"
 fi
 psa() {
-        ps axwwf --sort pid -o pid,ppid,nlwp,user,group,${_unit}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
+        ps axwwf --sort pid -o pid,ppid,nlwp,user:16,group,${_unit}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
                 | egrep --color=auto -i "^  PID|$1" | grep -v grep
 }
 
