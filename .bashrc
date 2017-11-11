@@ -246,7 +246,8 @@ alias j="jobs -l"
 alias odh='od -A x -t x1z'
 alias ai="sudo apt install"
 alias ap="apt-cache policy "
-alias auu='sudo su -c "set -x; apt-get update && apt-get -y upgrade && apt-get dist-upgrade && aptitude full-upgrade && apt-get clean && apt-cache gencaches && apt-get autoremove && aptitude purge ~c && aptitude forget-new"'
+#alias auu='sudo su -c "set -x; apt-get update && apt-get -y upgrade && apt-get dist-upgrade && aptitude full-upgrade && apt-get clean && apt-cache gencaches && apt-get autoremove && aptitude purge ~c && aptitude forget-new"'
+alias auu=$'sudo bash -c "set -ex; apt update; apt upgrade; apt full-upgrade; apt clean; apt autoremove; apt-cache gencaches; aptitude full-upgrade; aptitude purge ~c; aptitude forget-new; aptitude search ~o || true; aptitude search \'~S~i!~Odebian\' || true"'
 #alias rdp='rdesktop -k en-gb -g 1024x768+0+0 -N -a 16 -z -x l '
 alias rdp='/opt/FreeRDP/bin/xfreerdp /size:1024x768 /bpp:24 /cert-ignore +clipboard +fonts'
 alias mkiso='mkisofs -R -r -l -J '
@@ -449,6 +450,7 @@ tsdebsum () {
 }
 
 tomstatus () {
+        grep PRETTY_NAME /etc/*-release | awk -F= '{print $2}' | xargs
         uname -a
         load="$(cat /proc/loadavg)"
         procs="$(ps auxww | wc -l)"
