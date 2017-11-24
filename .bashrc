@@ -246,7 +246,8 @@ alias j="jobs -l"
 alias odh='od -A x -t x1z'
 alias ai="sudo apt install"
 alias ap="apt-cache policy "
-alias auu='sudo su -c "set -x; apt-get update && apt-get -y upgrade && apt-get dist-upgrade && aptitude full-upgrade && apt-get clean && apt-cache gencaches && apt-get autoremove && aptitude purge ~c && aptitude forget-new"'
+#alias auu='sudo su -c "set -x; apt-get update && apt-get -y upgrade && apt-get dist-upgrade && aptitude full-upgrade && apt-get clean && apt-cache gencaches && apt-get autoremove && aptitude purge ~c && aptitude forget-new"'
+alias auu=$'sudo bash -c "set -ex; apt update; apt upgrade; apt full-upgrade; apt clean; apt autoremove; apt-cache gencaches; aptitude full-upgrade; aptitude purge ~c; aptitude forget-new; aptitude search ~o || true; aptitude search \'~S~i!~Odebian\' || true"'
 #alias rdp='rdesktop -k en-gb -g 1024x768+0+0 -N -a 16 -z -x l '
 alias rdp='/opt/FreeRDP/bin/xfreerdp /size:1024x768 /bpp:24 /cert-ignore +clipboard +fonts'
 alias mkiso='mkisofs -R -r -l -J '
@@ -336,11 +337,20 @@ if [ $(echo -en "3.3.10\n$(ps -V | rev | awk '{print $1}' | rev)" | sort -t. -n 
         _unit="unit,"
 fi
 psa() {
-        ps axwwf --sort pid -o pid,ppid,nlwp,user,group,${_unit}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
+        ps axwwf --sort pid -o pid,ppid,nlwp,user:16,group,${_unit}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
                 | egrep --color=auto -i "^  PID|$1" | grep -v grep
 }
 
 ws () { wireshark $@& }
+
+function lsblka {
+        lsblk
+        lsblk -f
+        lsblk -m
+        lsblk -S
+        lsblk -t
+        lsblk -o NAME,SERIAL,KNAME,PARTUUID,STATE,WWN,RAND,PKNAME
+}
 
 #http://cmrg.fifthhorseman.net/wiki/BashFunctions
 # create temporary directory, and cd to it,
@@ -440,6 +450,8 @@ tsdebsum () {
 }
 
 tomstatus () {
+        grep PRETTY_NAME /etc/*-release | awk -F= '{print $2}' | xargs
+        uname -a
         load="$(cat /proc/loadavg)"
         procs="$(ps auxww | wc -l)"
         users="$(who | wc -l)"
