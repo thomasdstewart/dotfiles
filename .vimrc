@@ -162,3 +162,5 @@ au BufRead mutt-* set fo+=a
 ":highlight DiffChange cterm=none ctermfg=bg ctermbg=Yellow gui=none guifg=bg guibg=Yellow
 ":highlight DiffText cterm=none ctermfg=bg ctermbg=Magenta gui=none guifg=bg guibg=Magenta
 
+let g:xml_syntax_folding = 1
+au FileType xml setlocal fdm=syntax
