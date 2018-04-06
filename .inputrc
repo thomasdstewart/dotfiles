@@ -4,3 +4,4 @@ set bell-style none
 set blink-matching-paren on
 set colored-stats
 set colored-completion-prefix
+set enable-bracketed-paste on
