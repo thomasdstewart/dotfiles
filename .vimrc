@@ -138,6 +138,6 @@ set wrap
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 "custom file types
-autocmd Filetype python setlocal sts=2 sw=2
-autocmd Filetype yaml setlocal sts=4 sw=4
+autocmd Filetype python setlocal sts=4 sw=4
+autocmd Filetype yaml setlocal sts=2 sw=2
 
