@@ -1,105 +1,114 @@
-"take indent for new line from previous line
+"take indent for new line from previous line (ai)
 set autoindent
 
-""dark" or "light", used for highlight colors
-set background=light
+""dark" or "light", used for highlight colors (bg)
 "set background=dark
+set background=light
 
-"no keep backup file after overwriting a file
+"no keep backup file after overwriting a file (bk)
 set nobackup
 
-"how backspace works at start of line
+"how backspace works at start of line (bs)
 set backspace=indent,eol,start
 
-"number of columns in the display
+"if gvim
 if has("gui_running")
+        "number of columns in the display (co)
         set columns=80
 endif
 
-"type of encryption to use for file writing
-set cryptmethod=blowfish2
-
-"no behave Vi-compatible as much as possible
-set nocompatible
-
-"list of flags for how to display text
-set display+=lastline "as much as possible of the last line in a window
-set display+=uhex "Show unprintable characters hexadecimal as <xx>
-
-"use spaces when <Tab> is inserted
-set expandtab
-
-"no ring the bell for error messages
-set noerrorbells
-
-"make gvimdiff wide
+"if gvimdiff
 if (has("gui_running") && &foldmethod == 'diff')
+        "number of columns in the display (co)
         set columns=151
         map :q :qa
-        endif
+endif
 
-"type of file, used for autocommands
-filetype plugin on
+"type of encryption to use for file writing (cm)
+set cryptmethod=blowfish2
+
+"no behave Vi-compatible as much as possible (cp)
+set nocompatible
+
+"list of flags for how to display text (dy)
+set display+=lastline "When included, as much as possible of the last line in a window will be displayed.  "@@@" is put in the last columns of the last screen line to indicate the rest of the line is not displayed.
+set display+=uhex "Show unprintable characters hexadecimal as <xx> instead of using ^C and ~C.
+
+"no ring the bell for error messages (eb)
+set noerrorbells
+
+"use spaces when <Tab> is inserted (et)
+set expandtab
+
+"switch on file type detection, with automatic indenting and setting
+filetype plugin indent on
 
 "GUI: Name(s) of font(s) to be used
 set guifont=Monospace\ 10
 
-"GUI: Which components and options are used
-set guioptions-=T "Toolbar
-set guioptions-=t "tearoff menu items.
+"GUI: Which components and options are used (go)
+set guioptions-=T "Include Toolbar. Currently only in Win32, GTK+, Motif, Photon and Athena GUIs
+set guioptions-=t "Include tearoff menu items.  Currently only works for Win32, GTK+, and Motif 1.2 GUI.
 
-"number of command-lines that are remembered
+"number of command-lines that are remembered (hi)
 set history=10000
 
-"highlight matches with last search pattern
+"highlight matches with last search pattern (hls)
 set hlsearch
 
-"highlight match while typing search pattern
+"ignore case in search patterns (ic)
+set ignorecase
+
+"highlight match while typing search pattern (is)
 set incsearch
 
-"ignore case in search patterns
-set ignorecase	
-
-"tells when last window has status lines
+"tells when last window has status lines (ls)
 set laststatus=2 "always
 
-"wrap long lines at a blank
+"wrap long lines at a blank (lbr)
 set linebreak
 
-"characters for displaying in list mode
-set listchars=extends:>,precedes:<
-
-"number of lines in the display
+"if gvim
 if has("gui_running")
+        "number of lines in the display
         set lines=50
 endif
 
-"changes meaning of mouse buttons
+"show <Tab> and <EOL>
+"set list
+
+"characters for displaying in list mode (lcs)
+set listchars=tab:→\ ,trail:·,precedes:«,extends:»,eol:¶
+
+"recognize modelines at start or end of file (ml)
+set modeline
+
+"changes meaning of mouse buttons (mousem)
 set mousemodel=popup_setpos
 
-"print the line number in front of each line
+"print the line number in front of each line (nu)
 "set number
 
-"controls the format of :hardcopy output
-set printoptions=paper:a4,left:5mm,right:5mm,top:5mm,bottom:5mm
-"set printoptions=paper:a4,left:5mm,right:5mm,top:5mm,bottom:5mm,portrait:n,duplex:short
+"controls the format of :hardcopy output (popt)
+set printoptions=paper:a4,left:5mm,right:5mm,top:5mm,bottom:5mm "portrait
+"set printoptions=paper:a4,left:5mm,right:5mm,top:5mm,bottom:5mm,portrait:n,duplex:short "landscape
 
-"show cursor line and column in the status line
-"set ruler
+"number of spaces to use for (auto)indent step (ws)
+set shiftwidth=8
 
-"show (partial) command in status line
+"show (partial) command in status line (sc)
 set showcmd
 
-"briefly jump to matching bracket if insert one
+"briefly jump to matching bracket if insert one (sm)
 set showmatch
 
-"number of spaces that <Tab> uses while editing
+"number of spaces that <Tab> uses while editing (sts)
 set softtabstop=8
 
-"language(s) to do spell checking for
+"language(s) to do spell checking for (spl)
 set spelllang=en_GB
 
-"custom format for the status line
+"custom format for the status line (stl)
 set statusline=%<%F\ %m%r%h%w%y[%{&ff}]%=%l/%L:%c\ %{FileSize()}\ %p%%
 function! FileSize()
         let bytes = getfsize(expand("%:p"))
@@ -116,51 +125,19 @@ endfunction
 "syntax to be loaded for current buffer
 syntax on
 
-"maximum width of text that is being inserted
-"set textwidth=80
-set textwidth=0
-
-"use .viminfo file upon startup and exiting
+"use .viminfo file upon startup and exiting (vi)
 set viminfo='20,\"50
 
-"use menu for command line completion
+"use menu for command line completion (wmnu)
 set wildmenu
 
 "long lines wrap and continue on the next line
 set wrap
 
-"map up, down, home and end keys in normal
-map <up> gk
-map <down> gj
-map <home> g<home>
-map <end> g<end>
-   
-"map up, down, home and end keys in insert mode
-imap <up> <C-o>gk
-imap <down> <C-o>gj
-imap <home> <C-o>g<home>
-imap <end> <C-o>g<end>
+"return to same place
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-"Make p in Visual mode replace the selected text with the "" register.
-vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
+"custom file types
+autocmd Filetype python setlocal sts=2 sw=2
+autocmd Filetype yaml setlocal sts=4 sw=4
 
-"http://paulrouget.com/e/myvimrc/
-au BufRead mutt-* set fo+=a
-
-"from r9mm868
-":highlight hred ctermbg=red guibg=red
-":highlight hgreen ctermbg=green guibg=green
-":highlight hyellow ctermbg=yellow guibg=yellow
-":highlight hblue ctermbg=blue guibg=blue
-":highlight hpurple ctermbg=purple guibg=purple
-"characters for displaying in list mode
-"set listchars=extends:>,precedes:<
-"highlight WhitespaceEOL ctermbg=lightgray guibg=lightgray
-"match WhitespaceEOL /s+$/ 
-":highlight DiffAdd cterm=none ctermfg=bg ctermbg=Green gui=none guifg=bg guibg=Green
-":highlight DiffDelete cterm=none ctermfg=bg ctermbg=Red gui=none guifg=bg guibg=Red
-":highlight DiffChange cterm=none ctermfg=bg ctermbg=Yellow gui=none guifg=bg guibg=Yellow
-":highlight DiffText cterm=none ctermfg=bg ctermbg=Magenta gui=none guifg=bg guibg=Magenta
-
-let g:xml_syntax_folding = 1
-au FileType xml setlocal fdm=syntax
