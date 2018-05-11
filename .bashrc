@@ -455,14 +455,16 @@ tomstatus () {
         load="$(cat /proc/loadavg)"
         procs="$(ps auxww | wc -l)"
         users="$(who | wc -l)"
-        mo="$(awk -F: '/model name/{print $2}' /proc/cpuinfo | sort | uniq -c \
-                | sed 's/^ *\([0-9)]*\) */\1*/')"
-        so="$(awk -F: '/physical id/{print $2}' /proc/cpuinfo | sort | uniq | wc -l \
-                | awk '{print $1}')"
-        co="$(awk -F: '/cpu cores/{print $2}' /proc/cpuinfo | sort | uniq | awk '{print $1}')"
-        si="$(awk -F: '/siblings/{print $2}' /proc/cpuinfo | sort | uniq | awk '{print $1}')"
         echo "Load $load Procs $procs Users $users"
-        echo "$mo So $so Co $co Si $si"
+
+        model="$(awk -F: '/model name/{print $2}' /proc/cpuinfo | sort | uniq -c \
+                | sed 's/^ *\([0-9)]*\) */\1*/' | sed 's/  \+/ /g')"
+        sockets="$(awk -F: '/physical id/{print $2}' /proc/cpuinfo | sort | uniq | wc -l)"
+        cores="$(awk -F: '/core id/{print $2}' /proc/cpuinfo | wc -l)"
+        siblings="$(awk -F: '/siblings/{print $2}' /proc/cpuinfo | sort | uniq | awk '{print $1}')"
+        ht=""
+        test "$cores" != "$cores" && ht="HT"
+        echo "$model Sockets $sockets Cores $cores $ht"
 
         vm="$(grep -q ^flags.*hypervisor /proc/cpuinfo && echo vm || echo phy)"
         sv="$(cat /sys/class/dmi/id/sys_vendor)"
