@@ -249,7 +249,7 @@ alias ap="apt-cache policy "
 #alias auu='sudo su -c "set -x; apt-get update && apt-get -y upgrade && apt-get dist-upgrade && aptitude full-upgrade && apt-get clean && apt-cache gencaches && apt-get autoremove && aptitude purge ~c && aptitude forget-new"'
 alias auu=$'sudo bash -c "set -ex; apt update; apt upgrade; apt full-upgrade; apt clean; apt autoremove; apt-cache gencaches; aptitude full-upgrade; aptitude purge ~c; aptitude forget-new; aptitude search ~o || true; aptitude search \'~S~i!~Odebian\' || true"'
 #alias rdp='rdesktop -k en-gb -g 1024x768+0+0 -N -a 16 -z -x l '
-alias rdp='/opt/FreeRDP/bin/xfreerdp /size:1024x768 /bpp:24 /cert-ignore +clipboard +fonts'
+alias rdp='xfreerdp /size:1024x768 /bpp:24 /cert-ignore +clipboard +fonts'
 alias mkiso='mkisofs -R -r -l -J '
 alias vi=vim
 alias bc='bc -ql'
@@ -516,3 +516,12 @@ updaterc () {
 }
 updaterc
 
+
+hibp () {
+        echo -n "Password:"
+        read -s pass
+        h="$(echo -en "$pass" | sha1sum - | cut -c1-40)"
+        h1="$(echo "$h" | cut -c 1-5)"
+        h2="$(echo "$h" | cut -c 6-40)"
+        curl -s https://api.pwnedpasswords.com/range/"$h1" | grep -i "$h2"
+}
