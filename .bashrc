@@ -260,6 +260,7 @@ alias rsync='rsync -h'
 if [ $(ip help 2>&1 | grep -- -c | wc -l) -eq 1 ]; then
         alias ip='ip -c'
 fi
+alias noproxy='unset HTTP_PROXY https_proxy http_proxy no_proxy NO_PROXY HTTPS_PROXY'
 
 alias burniso="wodim -v dev=/dev/sr0 "
 alias burndvd="growisofs -Z /dev/sr0="
