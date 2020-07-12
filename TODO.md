@@ -11,3 +11,4 @@
  * openstack tail: tail -f /var/log/nova/*log | sed -r "s/$(date +%Y-%m-%d) //g; s/[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}/ID/g; s/[0-9a-z]{32}/ID/g"
  * migrate to stow
  * alias ssl='sudo ss -H -A inet -ln -p | column -t'
+ #https://www.citusdata.com/blog/2019/07/17/postgres-tips-for-average-and-power-user/
