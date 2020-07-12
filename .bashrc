@@ -526,3 +526,12 @@ hibp () {
         h2="$(echo "$h" | cut -c 6-40)"
         curl -s https://api.pwnedpasswords.com/range/"$h1" | grep -i "$h2"
 }
+
+makenetns () {
+        mkdir -p /var/run/netns; for f in /proc/*/ns/net; do ln -sf $f /var/run/netns/$(readlink $f); done
+}
+
+#https://news.ycombinator.com/item?id=20245913
+#echo 1 > /proc/sys/kernel/sysrq
+#echo s > /proc/sysrq-trigger
+#echo b > /proc/sysrq-trigger
