@@ -151,7 +151,7 @@ function __ps1 {
         fi
 
         if [ "$OS_AUTH_URL" != "" ]; then
-                openstack="($OS_USERNAME/$OS_TENANT_NAME$OS_PROJECT_NAME@$(echo $OS_AUTH_URL | awk -F'/' '{print $3}' | awk -F: '{print $1}'))"
+                openstack="($( echo $OS_USERNAME | awk -F'@' '{print $1}')/$OS_TENANT_NAME$OS_PROJECT_NAME@$(echo $OS_AUTH_URL | awk -F'[/.:]' '{print $4}'))"
         else
                 openstack=""
         fi
@@ -261,7 +261,7 @@ alias rsync='rsync -h'
 if [ $(ip help 2>&1 | grep -- -c | wc -l) -eq 1 ]; then
         alias ip='ip -c'
 fi
-alias noproxy='unset HTTP_PROXY https_proxy http_proxy no_proxy NO_PROXY HTTPS_PROXY'
+alias noproxy='unset HTTP_PROXY https_proxy http_proxy ftp_proxy FTP_PROXY no_proxy NO_PROXY HTTPS_PROXY'
 
 alias burniso="wodim -v dev=/dev/sr0 "
 alias burndvd="growisofs -Z /dev/sr0="
@@ -271,6 +271,11 @@ burnfile() { mkiso "$*" | burniso - ; }
 alias burnfiledvd="growisofs -Z /dev/sr0 -R -r -l -J "$*""
 
 alias moshberyl="mosh --ssh=\"nc -z -w1 beryl.stewarts.org.uk 222 2> /dev/null; ssh \" thomas@beryl.stewarts.org.uk"
+alias justssh="ssh -oCiphers=+$(ssh -Q cipher | xargs | sed 's/ /,/g') -oMACs=+$(ssh -Q mac  | xargs | sed 's/ /,/g') -oHostKeyAlgorithms=+$(ssh -Q key | xargs | sed 's/ /,/g') -oKexAlgorithms=+$(ssh -Q kex | xargs | sed 's/ /,/g')"
+
+#https://news.ycombinator.com/item?id=20245913
+#jq -r 'tostream | select(length > 1) | ( .[0] | map( if type == "number" then "[" + tostring + "]" else "." + .  end) | join("")) + " = " + (.[1] | @json)'
+alias jqf="jq -r 'tostream | select(length > 1) | ( .[0] | map( if type == \"number\" then \"[\" + tostring + \"]\" else \".\" + .  end) | join(\"\")) + \" = \" + (.[1] | @json)'"
 
 #dquilt push -a
 #dquilt new myPatch.diff
@@ -340,7 +345,7 @@ if [ $(echo -en "3.3.10\n$(ps -V | rev | awk '{print $1}' | rev)" | sort -t. -n 
 fi
 psa() {
         ps axwwf --sort pid -o pid,ppid,nlwp,user:16,group,${_unit}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
-                | egrep --color=auto -i "^  PID|$1" | grep -v grep
+                | egrep --color=auto -i "^[ ]*PID|$1" | grep -v grep
 }
 
 ws () { wireshark $@& }
@@ -528,11 +533,18 @@ hibp () {
         curl -s https://api.pwnedpasswords.com/range/"$h1" | grep -i "$h2"
 }
 
+killssh () {
+        for s in ~/.ssh/master*; do
+                s=$(echo $s | awk -F@ '{print $2}' | awk -F: '{print $1}')
+                echo $s
+                ssh -O exit $s
+        done
+}
+
 makenetns () {
         mkdir -p /var/run/netns; for f in /proc/*/ns/net; do ln -sf $f /var/run/netns/$(readlink $f); done
 }
 
-#https://news.ycombinator.com/item?id=20245913
 #echo 1 > /proc/sys/kernel/sysrq
 #echo s > /proc/sysrq-trigger
 #echo b > /proc/sysrq-trigger
