@@ -245,6 +245,7 @@ alias c=clear
 alias j="jobs -l"
 alias odh='od -A x -t x1z'
 alias ai="sudo apt install"
+alias aie="sudo apt -t experimental install"
 alias ap="apt-cache policy "
 #alias auu='sudo su -c "set -x; apt-get update && apt-get -y upgrade && apt-get dist-upgrade && aptitude full-upgrade && apt-get clean && apt-cache gencaches && apt-get autoremove && aptitude purge ~c && aptitude forget-new"'
 alias auu=$'sudo bash -c "set -ex; apt update; apt upgrade; apt full-upgrade; apt clean; apt autoremove; apt-cache gencaches; aptitude full-upgrade; aptitude purge ~c; aptitude forget-new; aptitude search ~o || true; aptitude search \'~S~i!~Odebian\' || true"'
