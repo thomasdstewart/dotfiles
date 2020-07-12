@@ -1,0 +1,7 @@
+[mentors]
+method = http
+fqdn = mentors.debian.net
+incoming = /upload
+allow_unsigned_uploads = 0
+progress_indicator = 2
+allowed_distributions = .*
