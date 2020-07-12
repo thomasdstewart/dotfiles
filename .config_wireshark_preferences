@@ -1,0 +1,18 @@
+# Packet list column format
+# Each pair of strings consists of a column title and its format
+gui.column.format: 
+	"No.", "%m",
+	"Time", "%t",
+        "ΔTime", "%Tt",
+	"Src", "%s",
+        "Src Port", "%S",
+	"Dest", "%d",
+        "Dest Port", "%D",
+        "Ports/Type", "%Cus:tcp.port || udp.port || icmp.type:0:R",
+	"Protocol", "%p",
+	"Length", "%L",
+        "Cum Bytes", "%B",
+        "TCP Stream", "%Cus:tcp.stream:0:R",
+	"Seq number", "%Cus:tcp.seq:0:R",
+	"Info", "%i"
+
