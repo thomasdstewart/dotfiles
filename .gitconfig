@@ -1,0 +1,34 @@
+[user]
+        name = Thomas Stewart
+        email = thomas@stewarts.org.uk
+	signingkey = 85C85556CD617CF2
+
+[gitreview]
+        username = thomasdstewart
+
+[includeIf "gitdir:work/"]
+        path = ~/.gitconfig-work
+
+[core]
+        excludesfile = ~/.gitignore
+
+[credential]
+        helper = cache --timeout=3600
+
+[pull]
+        rebase = false
+
+[push]
+	default = simple
+
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+
+#[http]
+#	proxy = localhost:8888
+#[url "https://"]
+#        insteadOf = git://
+
