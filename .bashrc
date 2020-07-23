@@ -343,8 +343,12 @@ _unit=""
 if [ $(echo -en "3.3.10\n$(ps -V | rev | awk '{print $1}' | rev)" | sort -t. -n -k3 -k2 -k1 | head -1) == "3.3.10" ]; then
         _unit="unit,"
 fi
+_label=""
+if [ -x /usr/sbin/getenforce -a $(/usr/sbin/getenforce) != "Disabled" ]; then
+        _label="label,"
+fi
 psa() {
-        ps axwwf --sort pid -o pid,ppid,nlwp,user:16,group,${_unit}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
+        ps axwwf --sort pid -o pid,ppid,nlwp,user:16,group,${_unit}${_label}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
                 | egrep --color=auto -i "^[ ]*PID|$1" | grep -v grep
 }
 
