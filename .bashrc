@@ -344,8 +344,10 @@ if [ $(echo -en "3.3.10\n$(ps -V | rev | awk '{print $1}' | rev)" | sort -t. -n 
         _unit="unit,"
 fi
 _label=""
-if [ -x /usr/sbin/getenforce -a $(/usr/sbin/getenforce) != "Disabled" ]; then
-        _label="label,"
+if [ -x /usr/sbin/getenforce ]; then
+        if [ $(/usr/sbin/getenforce) != "Disabled" ]; then
+                _label="label,"
+        fi
 fi
 psa() {
         ps axwwf --sort pid -o pid,ppid,nlwp,user:16,group,${_unit}${_label}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
