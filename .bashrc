@@ -351,7 +351,7 @@ if [ -x /usr/sbin/getenforce ]; then
 fi
 psa() {
         ps axwwf --sort pid -o pid,ppid,nlwp,user:16,group,${_unit}${_label}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
-                | egrep --color=auto -i "^[ ]*PID|$1" | grep -v grep
+                | grep -v grep | egrep --color=auto -i "^[ ]*PID|$1"
 }
 
 ws () { wireshark $@& }
