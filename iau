@@ -3,7 +3,9 @@
 if [ ! -d .dotfiles ]; then
         git clone https://github.com/thomasdstewart/dotfiles.git ~/.dotfiles
 fi
-git -C ~/.dotfiles pull
+cd ~/.dotfiles && git pull
+#version 1.7.1 does not have -C
+#git -C ~/.dotfiles pull
 
 find ~/.dotfiles/ ! -path '*/.dotfiles/.git' -name '.*' -type f \
                 | while read f; do
