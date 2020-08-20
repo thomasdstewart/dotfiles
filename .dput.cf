@@ -1,5 +1,5 @@
 [mentors]
-method = http
+method = https
 fqdn = mentors.debian.net
 incoming = /upload
 allow_unsigned_uploads = 0
