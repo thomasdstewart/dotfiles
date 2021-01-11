@@ -272,6 +272,7 @@ alias burnfiledvd="growisofs -Z /dev/sr0 -R -r -l -J "$*""
 
 alias moshberyl="mosh --ssh=\"nc -z -w1 beryl.stewarts.org.uk 222 2> /dev/null; ssh \" thomas@beryl.stewarts.org.uk"
 alias justssh="ssh -oCiphers=+$(ssh -Q cipher | xargs | sed 's/ /,/g') -oMACs=+$(ssh -Q mac  | xargs | sed 's/ /,/g') -oHostKeyAlgorithms=+$(ssh -Q key | xargs | sed 's/ /,/g') -oKexAlgorithms=+$(ssh -Q kex | xargs | sed 's/ /,/g')"
+alias sshp="ssh -o PreferredAuthentications=password"
 
 #https://news.ycombinator.com/item?id=20245913
 #jq -r 'tostream | select(length > 1) | ( .[0] | map( if type == "number" then "[" + tostring + "]" else "." + .  end) | join("")) + " = " + (.[1] | @json)'

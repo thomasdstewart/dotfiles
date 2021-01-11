@@ -2,6 +2,7 @@
 # Each pair of strings consists of a column title and its format
 gui.column.format: 
 	"No.", "%m",
+	"UTC", "%Aut",
 	"Time", "%t",
         "ΔTime", "%Tt",
 	"Src", "%s",
