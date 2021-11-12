@@ -156,6 +156,12 @@ function __ps1 {
                 openstack=""
         fi
 
+        if [ "$VIRTUAL_ENV" != "" ]; then
+                venv="[$(basename $VIRTUAL_ENV])"
+        else
+                venv=""
+        fi
+
         nojobs=$(jobs | wc -l)
         if [ $nojobs -gt 0 ]; then
                 nojobs=${darkgreen}\($nojobs\)${no_colour}
@@ -180,7 +186,7 @@ function __ps1 {
         historynum="${darkred}\!${no_colour}"
         prompt="${darkgreen}\\$"
 
-        export PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname}$systemdstatus ${workingdir} ${gitstatus}${openstack}${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
+        export PS1="${debian_chroot:+($debian_chroot)}${username}${at}${hostname}$systemdstatus ${workingdir} ${venv}${gitstatus}${openstack}${nojobs}${noscreens}${laststatus}${historynum}${prompt}${no_colour} "
 
         case "$TERM" in
         xterm*|rxvt*)
@@ -358,12 +364,31 @@ psa() {
 ws () { wireshark $@& }
 
 function lsblka {
-        lsblk
-        lsblk -f
-        lsblk -m
-        lsblk -S
-        lsblk -t
-        lsblk -o NAME,SERIAL,KNAME,PARTUUID,STATE,WWN,RAND,PKNAME
+        echo "lsblk -a"
+        lsblk -a
+
+        echo "lsblk -a -f (Output info about filesystems)"
+        lsblk -a -f
+
+        echo "lsblk -a -m (Output info about device owner, group and mode)"
+        lsblk -a -m
+
+        echo "lsblk -a -S (Output info about SCSI devices only)"
+        lsblk -a -S
+
+        echo "lsblk -a -t (Output info about block-device topology)"
+        lsblk -a -t
+        
+        echo "lsblk -a -D -d (Print information about the discarding capabilities)"
+        lsblk -a -D
+
+        echo "lsblk -a -z -d (Print the zone model for each device)"
+        lsblk -a -z
+        
+        #echo "lsblk -a -o (Other fields:)"
+        lsblk -a -o NAME,DAX,FSSIZE,FSUSED,HOTPLUG,KNAME,PARTFLAGS,PARTLABEL,PARTTYPE,PARTTYPENAME,PARTUUID,PATH,PKNAME,PTTYPE,PTUUID,RAND,STATE,SUBSYSTEMS,WWN
+
+        #lsblk -O | head -1 | sed 's/ /\n/g' | sort | uniq | egrep -v "^$(lsblka | grep ^NAME | sed 's/ /\n/g' | sort | uniq | grep -v "^$" | xargs | sed "s# #\$|^#g")\$" | xargs | sed 's/ /,/g'
 }
 
 #http://cmrg.fifthhorseman.net/wiki/BashFunctions
