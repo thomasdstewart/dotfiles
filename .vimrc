@@ -92,7 +92,7 @@ set mousemodel=popup_setpos
 "controls the format of :hardcopy output (popt)
 set printoptions=paper:a4,left:5mm,right:5mm,top:5mm,bottom:5mm "portrait
 "set printoptions=paper:a4,left:5mm,right:5mm,top:5mm,bottom:5mm,portrait:n,duplex:short "landscape
-"set printdevice=Brother_HL_L2375DW_series
+set printdevice=Brother_HL_L2375DW_series
 
 "number of spaces to use for (auto)indent step (ws)
 set shiftwidth=8
