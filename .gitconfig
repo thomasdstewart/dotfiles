@@ -34,3 +34,6 @@
 
 [alias]
 	plog = log --graph --pretty=format:'%h -%d %s %n' --abbrev-commit --date=relative --branches
+
+[init]
+	defaultBranch = main
