@@ -1,0 +1,71 @@
+1. create empty ~/.config/hexchat with skel config
+2. start hexchat
+3. connect to server
+4. quit
+5. update these values in ~/.config/hexchat/hexchat.conf
+        gui_join_dialog = 0
+        gui_slist_fav = 1
+        gui_slist_skip = 1
+        irc_nick1 = Pelalil
+        irc_nick2 = Pelalil_
+        irc_nick3 = Pelalil
+        irc_user_name = Thomas
+6. apply this patch to ~/.config/hexchat/servlist.conf
+
+--- hexchat.orig/servlist.conf	2021-07-02 14:21:19.495780530 +0100
++++ hexchat/servlist.conf	2021-07-02 14:24:56.665971818 +0100
+@@ -206,9 +206,10 @@
+ S=irc.fdfnet.net
+
+ N=freenode
+-L=6
++P=PASSWORD
++L=1
+ E=UTF-8 (Unicode)
+-F=23
++F=95
+ D=0
+ S=chat.freenode.net
+ S=irc.freenode.net
+@@ -341,9 +342,10 @@
+ S=irc.librairc.net
+
+ N=Libera.Chat
+-L=6
++P=PASSWORD
++L=1
+ E=UTF-8 (Unicode)
+-F=23
++F=95
+ D=0
+ S=irc.libera.chat
+
+@@ -386,8 +388,10 @@
+ S=irc.oceanius.com
+
+ N=OFTC
++P=PASSWORD
++L=1
+ E=UTF-8 (Unicode)
+-F=23
++F=95
+ D=0
+ S=irc.oftc.net
+
+@@ -424,11 +428,13 @@
+ S=vianetworks.ptnet.org
+
+ N=QuakeNet
+-L=8
++P=PASSWORD
++L=9
+ E=UTF-8 (Unicode)
+-F=19
++F=91
+ D=0
+ S=irc.quakenet.org
++C=auth %n %p
+
+ N=Rizon
+ E=UTF-8 (Unicode)
+
