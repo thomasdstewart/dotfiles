@@ -37,3 +37,6 @@
 
 [init]
 	defaultBranch = main
+
+#[http]
+#        sslVerify = false
