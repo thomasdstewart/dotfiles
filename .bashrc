@@ -282,7 +282,8 @@ alias mkiso='genisoimage -R -r -l -J '
 burnfile() { mkiso "$*" | burniso - ; }
 alias burnfiledvd="growisofs -Z /dev/sr0 -R -r -l -J "
 
-alias justssh="ssh -oCiphers=+\$(ssh -Q cipher | xargs | sed 's/ /,/g') -oMACs=+\$(ssh -Q mac  | xargs | sed 's/ /,/g') -oHostKeyAlgorithms=+\$(ssh -Q key | xargs | sed 's/ /,/g') -oKexAlgorithms=+\$(ssh -Q kex | xargs | sed 's/ /,/g')"
+# shellcheck disable=SC2139
+alias justssh="ssh -oCiphers=+$(ssh -Q cipher | xargs | sed 's/ /,/g') -oMACs=+$(ssh -Q mac  | xargs | sed 's/ /,/g') -oHostKeyAlgorithms=+$(ssh -Q key | xargs | sed 's/ /,/g') -oKexAlgorithms=+$(ssh -Q kex | xargs | sed 's/ /,/g')"
 alias sshp="ssh -o PreferredAuthentications=password"
 
 #https://news.ycombinator.com/item?id=20245913
