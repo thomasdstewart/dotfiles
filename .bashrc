@@ -367,7 +367,8 @@ if [ -x /usr/sbin/getenforce ]; then
 fi
 psa() {
     # shellcheck disable=SC2009
-    ps axwwf --sort pid -o pid,ppid,nlwp,user:16,group,${_unit}${_label}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
+    #ps axwwf --sort pid -o pid,ppid,nlwp,user:16,group,${_unit}${_label}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
+    ps axwwf -o pid,ppid,nlwp,user:16,group,${_unit}${_label}nice,%cpu,%mem,vsz,rss,tty,stat,start,bsdtime,command \
         | grep -v grep | grep -E --color=auto -i "^[ ]*PID|$1"
 }
 
