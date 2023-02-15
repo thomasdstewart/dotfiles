@@ -1,0 +1,59 @@
+set from = "thomas@stewarts.org.uk"
+set spoolfile = "imaps://beryl.stewarts.org.uk/INBOX"
+set folder = "imaps://beryl.stewarts.org.uk/"
+set imap_user = "thomas@stewarts.org.uk"
+set imap_pass = "FOO"
+set smtp_url = "smtp://thomas@stewarts.org.uk@beryl.stewarts.org.uk:25/"
+set smtp_pass = "FOO"
+set ssl_starttls = yes
+set ssl_force_tls = yes
+set record="=Sent"
+set postponed="=Drafts"
+set mask = "\..*"
+set pager_stop = yes
+set move = no
+bind pager <up> previous-line
+bind pager <down> next-line
+#set ssl_use_sslv3
+set header_cache=~/.mutt-cache
+ignore *
+unignore  From To Cc Bcc Subject Date Reply-To
+hdr_order From To Cc Bcc Subject Date Reply-To
+set editor = vim
+macro index,pager s '<save-message>?'
+macro index,pager S '<save-message>?/Spam<enter><enter>'
+macro index c '<change-folder>?'
+
+set query_command = "lbdbq '%s'"
+
+set implicit_autoview
+alternative_order text/plain text/html
+
+color normal            default         default
+color attachment        brightyellow    default
+color hdrdefault        cyan            default
+color indicator         default         cyan
+color markers           brightred       default
+color quoted            green           default
+color signature         cyan            default
+color status            brightgreen     blue
+color tilde             blue            default
+color tree              red             default
+
+#set attribution="* %n <%a> [%(%Y-%m-%d %H:%M:%S)]:"
+set attribution="On %(%d %b %Y, at %H:%M), %n wrote:"
+set quote_regexp="^( {0,4}[>|:]| {0,4}[a-z0-9]+[>|]+)+"
+set reply_regexp="^((re|RE|Re|r e|sv|SV|Sv):[ \t]*)*"
+set pager_format="%S [%C] %n (%l) %s"
+set forward_format="(forw) %s"
+set status_format="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b? %?l? %l?]---(%s/%S)-%>-(%P)-(%b)---"
+
+set mime_forward=yes
+set mime_forward_rest=yes
+
+#set sig_on_top = yes
+#unset sig_dashes
+set indent_str="> "
+#set indent_str=""
+#
+set crypt_use_gpgme=no
