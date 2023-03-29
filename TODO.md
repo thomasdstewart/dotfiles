@@ -12,3 +12,4 @@
  * migrate to stow
  * alias ssl='sudo ss -H -A inet -ln -p | column -t'
  #https://www.citusdata.com/blog/2019/07/17/postgres-tips-for-average-and-power-user/
+ #https://www.masteringemacs.org/article/keyboard-shortcuts-every-command-line-hacker-should-know-about-gnu-readline
