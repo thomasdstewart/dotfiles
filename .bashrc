@@ -290,6 +290,9 @@ alias sshp="ssh -o PreferredAuthentications=password"
 #jq -r 'tostream | select(length > 1) | ( .[0] | map( if type == "number" then "[" + tostring + "]" else "." + .  end) | join("")) + " = " + (.[1] | @json)'
 alias jqf="jq -r 'tostream | select(length > 1) | ( .[0] | map( if type == \"number\" then \"[\" + tostring + \"]\" else \".\" + .  end) | join(\"\")) + \" = \" + (.[1] | @json)'"
 
+
+alias myip="dig -4 +short ip @dns.toys | xargs"
+
 #dquilt push -a
 #dquilt new myPatch.diff
 #dquilt add README
