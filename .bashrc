@@ -128,7 +128,7 @@ function __ps1 {
     hostname="${darkgreen}\h${no_colour}"
 
     if [ -x /bin/systemctl ]; then 
-        if [ "$(systemctl --version | awk '/systemd/{print $2}')" -ge 215 ]; then
+        if [ "$(systemctl --version | awk '/systemd/{print $2}' | sed 's/\([0-9][0-9]*\).*/\1/')" -ge 215 ]; then
             systemdstatus=$(systemctl is-system-running)
             if [ "$systemdstatus" != running ]; then
                 systemdstatus=${red}\(${systemdstatus}\)${no_colour}

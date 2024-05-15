@@ -1,10 +1,10 @@
 set from = "thomas@stewarts.org.uk"
-set spoolfile = "imaps://beryl.stewarts.org.uk/INBOX"
-set folder = "imaps://beryl.stewarts.org.uk/"
+set spoolfile = "imaps://imaps.stewarts.org.uk/INBOX"
+set folder = "imaps://imaps.stewarts.org.uk/"
 set imap_user = "thomas@stewarts.org.uk"
-set imap_pass = "FOO"
-set smtp_url = "smtp://thomas@stewarts.org.uk@beryl.stewarts.org.uk:25/"
-set smtp_pass = "FOO"
+set imap_pass = ""
+set smtp_url = "smtp://thomas@stewarts.org.uk@smtp.stewarts.org.uk:25/"
+set smtp_pass = ""
 set ssl_starttls = yes
 set ssl_force_tls = yes
 set record="=Sent"
