@@ -293,6 +293,16 @@ alias jqf="jq -r 'tostream | select(length > 1) | ( .[0] | map( if type == \"num
 
 alias myip="dig -4 +short ip @dns.toys | xargs"
 
+
+alias tfi="terraform init"
+alias tfv="terraform validate"
+alias tff="terraform fmt"
+alias tfp="terraform plan -input=false -detailed-exitcode -out .tfplan"
+alias tfa="terraform apply -input=false .tfplan"
+alias tfo="terraform output -json > .output.json"
+alias tfall='tfi && tff && tfv && tfp; test $? -eq 0 -o $? -eq 2 && echo "Press Enter to apply" && read && tfa && tfo'
+
+
 #dquilt push -a
 #dquilt new myPatch.diff
 #dquilt add README
