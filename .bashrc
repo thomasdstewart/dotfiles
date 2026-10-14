@@ -286,6 +286,16 @@ alias burnfiledvd="growisofs -Z /dev/sr0 -R -r -l -J "
 alias justssh="ssh -oCiphers=+$(ssh -Q cipher | xargs | sed 's/ /,/g') -oMACs=+$(ssh -Q mac  | xargs | sed 's/ /,/g') -oHostKeyAlgorithms=+$(ssh -Q key | xargs | sed 's/ /,/g') -oKexAlgorithms=+$(ssh -Q kex | xargs | sed 's/ /,/g')"
 alias sshp="ssh -o PreferredAuthentications=password"
 
+oldssh() {
+    podman run --rm -it docker.io/library/debian:12 \
+        sh -c "apt-get update -qq &&
+               DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends openssh-client &&
+               exec ssh \
+                 -o KexAlgorithms=+diffie-hellman-group14-sha1 \
+                 -o HostKeyAlgorithms=+ssh-rsa \
+                 $1"
+}
+
 #https://news.ycombinator.com/item?id=20245913
 #jq -r 'tostream | select(length > 1) | ( .[0] | map( if type == "number" then "[" + tostring + "]" else "." + .  end) | join("")) + " = " + (.[1] | @json)'
 alias jqf="jq -r 'tostream | select(length > 1) | ( .[0] | map( if type == \"number\" then \"[\" + tostring + \"]\" else \".\" + .  end) | join(\"\")) + \" = \" + (.[1] | @json)'"
@@ -298,9 +308,10 @@ alias tfi="terraform init"
 alias tfv="terraform validate"
 alias tff="terraform fmt"
 alias tfp="terraform plan -input=false -detailed-exitcode -out .tfplan"
+alias tfs="terraform show -json .tfplan > .tfplan.json"
 alias tfa="terraform apply -input=false .tfplan"
 alias tfo="terraform output -json > .output.json"
-alias tfall='tfi && tff && tfv && tfp; test $? -eq 0 -o $? -eq 2 && echo "Press Enter to apply" && read && tfa && tfo'
+alias tfall='tfi && tff && tfv && tfp && tfs; test $? -eq 0 -o $? -eq 2 && echo "Press Enter to apply" && read && tfa && tfo'
 
 
 #dquilt push -a
