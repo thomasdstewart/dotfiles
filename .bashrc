@@ -140,9 +140,10 @@ function __ps1 {
 
     workingdir="${darkcyan}\w${no_colour}"
 
-    if [ -f /etc/bash_completion.d/git-prompt ]; then
+    if [ -f /etc/bash_completion.d/git-prompt -o /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
         # shellcheck disable=SC1091
-        . /etc/bash_completion.d/git-prompt
+        test -f /etc/bash_completion.d/git-prompt && . /etc/bash_completion.d/git-prompt
+        test -f /usr/share/git-core/contrib/completion/git-prompt.sh && . /usr/share/git-core/contrib/completion/git-prompt.sh
         # shellcheck disable=SC2034
         GIT_PS1_SHOWDIRTYSTATE=1
         # shellcheck disable=SC2034
@@ -620,6 +621,10 @@ killssh () {
 makenetns () {
     mkdir -p /var/run/netns; for f in /proc/*/ns/net; do ln -sf "$f" /var/run/netns/"$(readlink "$f")"; done
 }
+
+if command -v direnv &>/dev/null; then
+    eval "$(direnv hook bash)"
+fi
 
 #echo 1 > /proc/sys/kernel/sysrq
 #echo s > /proc/sysrq-trigger
